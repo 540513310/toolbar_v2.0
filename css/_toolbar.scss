@@ -113,110 +113,280 @@
 
 //以上是图片实现工具栏
 
+
+
 //以下通过图标字体方式实现工具栏
+
+// $toolbar-size:52px;
+// .toolbar{
+// 	position: fixed;
+// 	left: 50%;
+// 	bottom: 5px ;
+// 	margin-left: -$toolbar-size / 2;
+// }
+
+// .toolbar-item{
+// 	position: relative;
+// 	display: block;
+// 	height: $toolbar-size;
+// 	width: $toolbar-size;
+// 	margin-top: 1px;
+	
+// 	&:hover{
+// 		.toolbar-icon{
+// 			top:-$toolbar-size;
+// 		}
+// 		.toolbar-text{
+// 			top:0;
+// 		}
+// 		.toolbar-layer{
+// 			@include opacity(1);
+// 			@include scale(1);
+// 		}
+// 	}
+// }
+
+// .toolbar-btn{
+// 	position: absolute;
+// 	left: 0;
+// 	top:0;
+// 	height: $toolbar-size;
+// 	width: $toolbar-size;
+// 	overflow: hidden;
+// }
+
+// .toolbar-icon{
+// 	position: absolute;
+// 	left: 0;
+// 	top:0;
+// 	width: $toolbar-size;
+// 	height: $toolbar-size;
+// 	background-color: #d0d6d9;
+// 	font-size:30px;
+// 	color: #fff;
+// 	text-align: center;
+// 	line-height: $toolbar-size;
+// 	@include transition(top 1s);
+// }
+
+// .toolbar-text{
+// 	position: absolute;
+// 	left: 0;
+// 	top:$toolbar-size;
+// 	width: $toolbar-size;
+// 	height: $toolbar-size;
+// 	background-color: #98a1a6;
+// 	padding-top: 12px;
+// 	font-size:12px;
+// 	color: #fff;
+// 	text-align: center;
+// 	line-height: 1.2;
+// 	@include transition(top 1s);
+// }
+
+// .toolbar-layer{
+// 	position: absolute;
+// 	right: $toolbar-size - 6;
+// 	bottom: -10px;
+// 	width: 172px;
+// 	background-image: url(../img/toolbar_img.png);
+// 	background-repeat: no-repeat;
+// 	@include opacity(0);
+// 	@include transform-origin(95% 95%);
+// 	@include scale(0.01);
+// 	@include transition(all 1s);
+// }
+
+// .toolbar-layer-weixin{
+// 	height: 212px;
+// 	background-position: 0 0;
+// }
+
+// .toolbar-layer-app{
+// 	height: 194px;
+// 	background-position: 0 -222px;
+
+// }
+
+
+
+
+
+//使用before和after伪类简化html的结构
 $toolbar-size:52px;
+
 .toolbar{
 	position: fixed;
 	left: 50%;
-	bottom: 5px ;
+	bottom: 5px;
 	margin-left: -$toolbar-size / 2;
+
 }
 
 .toolbar-item{
 	position: relative;
 	display: block;
-	height: $toolbar-size;
 	width: $toolbar-size;
-	margin-top: 1px;
-	
+	height: $toolbar-size;
+	margin-left: 1px;
+
+	//当鼠标移入时
 	&:hover{
-		.toolbar-icon{
-			top:-$toolbar-size;
+		//icon和text进行变换
+		.toolbar-btn{
+			&:before{
+				top:-$toolbar-size;
+			}
+			&:after{
+				top:0;
+			}
 		}
-		.toolbar-text{
-			top:0;
-		}
-		.toolbar-layer{
+		//当鼠标移入时显示二维码
+		&:after{
 			@include opacity(1);
 			@include scale(1);
+		}
+	}
+
+	
+	//用after来为二维码添加样式
+	&:after{
+		content:"";
+		position: absolute;
+		right: $toolbar-size - 6;
+		bottom: -10px;
+		width: 172px;
+		background-image: url(../img/toolbar_img.png);
+		background-repeat: no-repeat;
+		@include opacity(0);
+		@include transform-origin(95% 95%);
+		@include scale(0.01);
+		@include transition(all 1s);
+	}
+
+}
+
+
+.toolbar-item-weixin{
+	//设置微信公众的二维码的位置
+	&:after{
+		content:"";
+		height: 212px;
+		background-position: 0 0;
+	}
+
+	//微信图标字体的样式
+	.toolbar-btn{
+		&:before{
+			content: "\e902";
+		}
+		&:after{
+			content:"公众\A账号";
+		}
+	}
+	
+}
+
+.toolbar-item-feedback{
+	//意见反馈图标字体的样式
+	.toolbar-btn{
+		&:before{
+			content: "\e900";
+		}
+		&:after{
+			content:"意见\A反馈";
+		}
+	}
+}
+
+.toolbar-item-app{
+	//设置app下载的二维码的位置
+	&:after{
+		content:"";
+		height: 194px;
+		background-position: 0 -222px;
+	}
+
+	//app下载图标字体的样式
+	.toolbar-btn{
+		&:before{
+			content: "\e958";
+		}
+		&:after{
+			content:"app\A下载";
+		}
+	}
+
+}
+
+.toolbar-item-top{
+	//返回顶部图标字体的样式
+	.toolbar-btn{
+		&:before{
+			content: "\e901";
+		}
+		&:after{
+			content:"返回\A顶部";
 		}
 	}
 }
 
 .toolbar-btn{
+	//图标字体的公共样式
+	 /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+
 	position: absolute;
 	left: 0;
 	top:0;
-	height: $toolbar-size;
 	width: $toolbar-size;
+	height: $toolbar-size;
 	overflow: hidden;
-}
 
-.toolbar-icon{
-	position: absolute;
-	left: 0;
-	top:0;
-	width: $toolbar-size;
-	height: $toolbar-size;
-	background-color: #d0d6d9;
-	font-size:30px;
-	color: #fff;
-	text-align: center;
-	line-height: $toolbar-size;
-	@include transition(top 1s);
-}
+	//设置图标字体icon
+	&:before{
+		content:"";
+		position: absolute;
+		left: 0;
+		top:0;
+		width: $toolbar-size;
+		height: $toolbar-size;
+		background-color: #d0d6d9;
+		font-size:30px;
+		color: #fff;
+		text-align: center;
+		line-height: $toolbar-size;
+		@include transition(top 1s);
 
-.toolbar-text{
-	position: absolute;
-	left: 0;
-	top:$toolbar-size;
-	width: $toolbar-size;
-	height: $toolbar-size;
-	background-color: #98a1a6;
-	padding-top: 12px;
-	font-size:12px;
-	color: #fff;
-	text-align: center;
-	line-height: 1.2;
-	@include transition(top 1s);
-}
+	}
 
-.toolbar-layer{
-	position: absolute;
-	right: $toolbar-size - 6;
-	bottom: -10px;
-	width: 172px;
-	background-image: url(../img/toolbar_img.png);
-	background-repeat: no-repeat;
-	@include opacity(0);
-	@include transform-origin(95% 95%);
-	@include scale(0.01);
-	@include transition(all 1s);
-}
-
-.toolbar-layer-weixin{
-	height: 212px;
-	background-position: 0 0;
-}
-
-.toolbar-layer-app{
-	height: 194px;
-	background-position: 0 -222px;
-
-}
-
-.icon-wechat{
-
-}
-
-.icon-message{
-
-}
-
-.icon-mobile{
-
-}
-
-.icon-align-top{
-
+	//设置text
+	&:after{
+		content:"";
+		position: absolute;
+		left: 0;
+		top:$toolbar-size;
+		width: $toolbar-size;
+		height: $toolbar-size;
+		background-color: #98a1a6;
+		font-size:12px;
+		color: #fff;
+		text-align: center;
+		padding-top: 12px;
+		line-height: 1.2;
+		@include transition(top 1s);
+		white-space:pre;
+		
+	}
 }
