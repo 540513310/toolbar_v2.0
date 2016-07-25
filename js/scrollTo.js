@@ -10,13 +10,13 @@ define(['jquery'],function ($) {
 
 	ScrollTo.prototype.move = function() {
 		$('html,body').animate({
-			ScrollTop:this.opts.dest
+			scrollTop:this.opts.dest
 		},this.opts.speed);
 
 	};
 
 	ScrollTo.prototype.go=function(){
-		$('html,body').ScrollTop(this.opts.dest);
+		$('html,body').scrollTop(this.opts.dest);
 
 	};
 
@@ -25,5 +25,8 @@ define(['jquery'],function ($) {
 		dest:0,		//运动到哪里（位置）
 		speed:800	//运动的速度
 	};
+	return{
+		ScrollTo:ScrollTo
+	};
 
-}) 
+}); 

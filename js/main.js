@@ -4,9 +4,14 @@ requirejs.config({
 	}
 });
 
-requirejs(['jquery'],function ($) {
-	//$('body').css('background-color','red');
-	$('#backTop').on('click' , move);
+requirejs(['jquery' ,'scrollTo'],function ($,scrollto) {
+	//使用已经封装的模块ScrollTo中的move和go方法
+	var scroll = new scrollto.ScrollTo({
+
+	});
+	$('#backTop').on('click' ,$.proxy(scroll.move,scroll));
+	//$('#backTop').on('click' , move);
+
 	$(window).on('scroll',function  () {
 		checkPosition($(window).height());
 	});
