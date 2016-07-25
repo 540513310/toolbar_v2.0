@@ -9,15 +9,22 @@ define(['jquery'],function ($) {
 	}
 
 	ScrollTo.prototype.move = function() {
-		$('html,body').animate({
-			scrollTop:this.opts.dest
-		},this.opts.speed);
-
+		//判断滚动条是否已经达到目的地
+		if ($(window).scrollTop() != this.opts.dest) {
+			//判断是否在运动者，只有滚动条并不在运动是才执行
+			if (!$('html,body').is(':animated')) {
+				$('html,body').animate({
+					scrollTop:this.opts.dest
+				},this.opts.speed);
+			}
+		}
 	};
 
 	ScrollTo.prototype.go=function(){
-		$('html,body').scrollTop(this.opts.dest);
-
+		//只要判断滚动条还没到达目的的就可以执行
+		if ($(window).scrollTop() != this.opts.dest) {
+			$('html,body').scrollTop(this.opts.dest);
+		}
 	};
 
 	//给函数ScrollTo添加一个属性，用来存放默认的运动属性
