@@ -13,10 +13,16 @@ requirejs(['jquery'],function ($) {
 
 	checkPosition($(window).height());
 
+	//运动到顶部
 	function move () {
 		$('html,body').animate({
 			scrollTop:0
 		},800);
+	}
+
+	//直接到达顶部
+	function go(){
+		$('html,body').scrollTop(0);
 	}
 
 	function checkPosition(pos){
