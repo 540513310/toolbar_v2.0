@@ -1,9 +1,9 @@
 define(['jquery','scrollTo'],function ($,scrollto) {
 	function BackTop (el,opts){
 		this.opts=$.extend({},BackTop.DEFAULTS,opts);
-		this.el=$(el);
-		this.scroll=new scrollto.scrollTo({
-			dest:0
+		this.$el=$(el);
+		this.scroll=new scrollto.ScrollTo({
+			dest:0,
 			speed:this.opts.speed
 		});
 
@@ -31,8 +31,10 @@ define(['jquery','scrollTo'],function ($,scrollto) {
 		this.scroll.go();
 	};
 	BackTop.prototype._checkPosition = function() {
-		if ($(window).scrollTop()>this.opts.pos) {}
+		if ($(window).scrollTop()>this.opts.pos) {
 			this.$el.fadeIn();
+		}
+			
 		else{
 			this.$el.fadeOut();
 		}
